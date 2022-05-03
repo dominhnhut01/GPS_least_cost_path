@@ -7,27 +7,27 @@ import java.util.*;
 public class Path implements Comparable<Path> {
 	private LinkedList<Vertex> path;
 	private int totalDistCost, totalTimeCost, cost;
-	private Vertex src, dest;
+	private Vertex start, end;
 	private boolean useDistCost;
 	
 	/**
 	 * Workhorse Constructor
-	 * @param Vertex src
-	 * @param Vertex dest
+	 * @param Vertex start
+	 * @param Vertex end
 	 * @param int totalDistCost
 	 * @param int totalTimeCost
 	 * @param LinkedList<Vertex> path
 	 * @param boolean useDistCost
 	 */
-	public Path(Vertex src,
-				Vertex dest,
+	public Path(Vertex start,
+				Vertex end,
 				int totalDistCost,
 				int totalTimeCost,
 				LinkedList<Vertex> path,
 				boolean useDistCost) {
 
-		this.src = src;
-		this.dest = dest;
+		this.start = start;
+		this.end = end;
 		setPath(path);
 
 		this.totalDistCost = totalDistCost;
@@ -42,12 +42,36 @@ public class Path implements Comparable<Path> {
 	 * @param useDistCost
 	 */
 	public Path(boolean useDistCost) {
-		this.src = this.dest = null;
-		this.path = null;
+		this.start = this.end = null;
+		this.path = new LinkedList<Vertex>();
 		this.totalDistCost = this.totalTimeCost = 0;
 		this.useDistCost = useDistCost;
 		this.setCost();
 	}
+
+	/**
+	 * Constructor
+	 * @param useDistCost
+	 */
+	public Path(Vertex start, boolean useDistCost) {
+		this.start = start;
+		this.end = start;
+		this.path.add(start);
+
+		this.totalDistCost = this.totalTimeCost = 0;
+		this.useDistCost = useDistCost;
+		this.setCost();
+	}
+
+	public Path(Path p) {
+		this.start = p.getStart();
+		this.end = p.getEnd();
+		setPath(p.getPath());
+		this.totalDistCost = p.getTotalDistCost();
+		this.totalTimeCost = p.getTotalTimeCost();
+		this.useDistCost = p.isUseDistCost();
+		this.setCost();
+    }
 
 	/**
 	 * Add an Edge to current Path
@@ -55,28 +79,24 @@ public class Path implements Comparable<Path> {
 	 * Add a new edge to current path. The current path's last vertex 
 	 * must equal to the staring vertex of added Egde
 	 */
-	public void addPath(Edge e) {
-		if (src == null && dest == null) {
-			src = e.getSrc();
-			path.add(src);
-			dest = e.getDest();
-			path.add(dest);
+	public void addEdge(Edge e) {
+		if (start == null) {
+			// Update initial start & end nodes
+			start = e.getStart();
+			path.add(start);
+			end = e.getEnd();
+			path.add(end);
+		}
 
-			totalDistCost += e.getDistCost();
-			totalTimeCost += e.getTimeCost();
-			this.setCost();
-			
-		} else if (dest.getName().equals(e.getSrc().getName())) {
-			dest = e.getDest();
-			path.add(dest);
+		if (end.equals(e.getStart())) {
+			end = e.getEnd();
+			path.add(end);
 			
 			totalDistCost += e.getDistCost();
 			totalTimeCost += e.getTimeCost();
-			
 			this.setCost();
 		} else {
-			System.out.println("End vertex not match to new path's starting Vertex");
-			this.setCost();
+			System.out.println("End vertex != new path's starting Vertex");
 			return;
 		}
 	}
@@ -99,7 +119,7 @@ public class Path implements Comparable<Path> {
 	@Override
 	public String toString() {
 		String result = String.format("Source: %s  Destination: %s  Distance Cost: %d  Time Cost: %d",
-				src.getName(), dest.getName(), totalDistCost, totalDistCost);
+				start.getName(), end.getName(), totalDistCost, totalDistCost);
 		return result;
 	}
 	
@@ -128,20 +148,20 @@ public class Path implements Comparable<Path> {
 		this.totalTimeCost = totalTimeCost;
 	}
 
-	public Vertex getSrc() {
-		return src;
+	public Vertex getStart() {
+		return start;
 	}
 
-	public void setSrc(Vertex src) {
-		this.src = src;
+	public void setStart(Vertex start) {
+		this.start = start;
 	}
 
-	public Vertex getDest() {
-		return dest;
+	public Vertex getEnd() {
+		return end;
 	}
 
-	public void setDest(Vertex dest) {
-		this.dest = dest;
+	public void setEnd(Vertex end) {
+		this.end = end;
 	}
 
 	public boolean isUseDistCost() {

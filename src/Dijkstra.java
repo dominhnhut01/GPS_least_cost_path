@@ -1,5 +1,6 @@
 import java.util.Map;
 import java.util.HashMap;
+import java.util.ArrayList;
 
 public class Dijkstra {
   //Properties
@@ -7,7 +8,7 @@ public class Dijkstra {
   private int totalCost;
   private Map<String, Edge> edgeList;
   private Map<String, Vertex> vertexList;
-  Vertex start, goal;
+  Vertex start, goal, end;
 
   //Method
   public Dijkstra(Vertex start, Vertex goal) {
@@ -27,45 +28,51 @@ public class Dijkstra {
     this.pathQueue = new PathQueue<Path>();
   }
 
-  public void addEdge(Path edge) {
-
-    edgeStr = edge.getStart() + edge.getEnd();
+  public void addEdge(Edge edge) {
+    String edgeStr = edge.getStart().toString() + edge.getEnd().toString();
     edgeList.put(edgeStr, edge);
   }
 
   public void addVertex(Vertex vertex) {
-    edgeList.put(vertex.toString(), vertex);
+    vertexList.put(vertex.toString(), vertex);
   }
 
   public void setStart(Vertex start) {
-    this.start = start
+    this.start = start;
   }
 
   public void setEnd(Vertex end) {
     this.end = end;
   }
 
-  public Path shortestPath() {
+  public Path shortestPath(boolean useDistCost) {
     Vertex curStartPoint = start;
-    pathQueue.add(new Path(start, start));
+    pathQueue.add(new Path(start, useDistCost));
     Path curPath;
     Path clonePath;
-    ArrayList tempEdges;
-    while (pathQueue.peek() != null && pathQueue.peek().getEndPoint().compareTo(goal) == 0) {
-      curPath = pathQueue.poll();
-      tempEdges = findEdge(curPath.getEndPoint());
+
+    ArrayList<Edge> tempEdges;
+    while (pathQueue.peek() != null && pathQueue.peek().getEnd().equals(goal)) {
+      curPath = pathQueue.poll();  // Path class
+      tempEdges = findEdge(curPath.getEnd());
+
       for (Edge e : tempEdges) {
         clonePath = new Path(curPath);
         clonePath.addEdge(e);
         pathQueue.add(clonePath);
+
       }
     }
 
     return pathQueue.peek();
   }
 
+  /**
+   * Return edge with the vertex argument as the start start
+   * @param startPoint
+   * @return
+   */
   public ArrayList<Edge> findEdge(Vertex startPoint) {
-    //Return edge with the vertex argument as the start start
     String curEdgeStr;
     Edge curEdge;
     ArrayList<Edge> validEdges = new ArrayList<Edge>();

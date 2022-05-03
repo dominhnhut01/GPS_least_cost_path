@@ -35,9 +35,24 @@ public class Vertex {
 	 */
 	@Override
 	public String toString() {
-		String result = String.format("%s\t%s\t%d\t%d", name, address, x, y);
+		String result = String.format("%s", name);
 		return result;
 	}
+
+	/**
+	 * equals() method
+	 */
+	@Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Vertex)) {
+        	return false;
+        }
+        Vertex c = (Vertex) o;
+        return this.name.equals(c.getName());
+    }
 	
 	//===========================================================================================
 	// Setters and Getters
@@ -66,7 +81,4 @@ public class Vertex {
 	public void setY(int y) {
 		this.y = y;
 	}
-	
-	
-	
 }

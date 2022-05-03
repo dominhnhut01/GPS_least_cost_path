@@ -3,43 +3,61 @@
  * Class Edge stores the graph's edges
  */
 public class Edge {
-	private Vertex src, dest;
+	private Vertex start, end;
 	private int timeCost, distCost;
 	
 	/**
 	 * Workhorse Constructor
-	 * @param Vertex src
-	 * @param Vertex dest
+	 * @param Vertex start
+	 * @param Vertex end
 	 * @param int timeCost
 	 * @param int distCost
 	 */
-	public Edge(Vertex src, Vertex dest, int timeCost, int distCost) {
-		this.src = src;
-		this.dest = dest;
+	public Edge(Vertex start, Vertex end, int timeCost, int distCost) {
+		this.start = start;
+		this.end = end;
 		this.timeCost = timeCost;
 		this.distCost = distCost;
 	}
 	
 	@Override
 	public String toString() {
-		String result = String.format("%s\t%s\t%d\t%d", src.getName(), dest.getName(), timeCost, distCost);
+		String result = String.format("%s\t%s\t%d\t%d", start.getName(), end.getName(), timeCost, distCost);
 		return result;
 	}
+
+	/**
+	 * equals() method
+	 */
+	@Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof Edge)) {
+        	return false;
+        }
+        Edge c = (Edge) o;
+        return this.start.equals(c.getStart()) &&
+			this.end.equals(c.getEnd()) &&
+			timeCost == c.getTimeCost() &&
+			distCost == c.getDistCost();
+    }
 	
 	//===========================================================================================
 	// Setters and Getters
 	// ==========================================================================================
-	public Vertex getSrc() {
-		return src;
+	public Vertex getStart() {
+		return start;
 	}
-	public void setSrc(Vertex src) {
-		this.src = src;
+	public void setStart(Vertex start) {
+		this.start = start;
 	}
-	public Vertex getDest() {
-		return dest;
+	public Vertex getEnd() {
+		return end;
 	}
-	public void setDest(Vertex dest) {
-		this.dest = dest;
+	public void setEnd(Vertex end) {
+		this.end = end;
 	}
 	public int getTimeCost() {
 		return timeCost;
@@ -53,6 +71,4 @@ public class Edge {
 	public void setDistCost(int distCost) {
 		this.distCost = distCost;
 	}
-	
-	
 }
