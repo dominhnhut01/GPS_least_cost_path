@@ -58,7 +58,6 @@ public class Dijkstra {
         clonePath = new Path(curPath);
         clonePath.addEdge(e);
         pathQueue.add(clonePath);
-
       }
     }
 
