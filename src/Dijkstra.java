@@ -1,5 +1,5 @@
 import java.util.Map;
-import java.util.HaspMap;
+import java.util.HashMap;
 
 public class Dijkstra {
   //Properties
