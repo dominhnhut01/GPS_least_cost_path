@@ -10,7 +10,7 @@ public class Graph {
 	private boolean useDistCost;
 	private boolean returnAddress;
 	private HashMap <Vertex, Set<Edge>> graphData;
-	private HashMap<String, Vertex> vertices = new HashMap<String, Vertex>(); 
+	private HashMap<String, Vertex> vertices; 
 	
 	public Graph() {
 		useDistCost = false;
