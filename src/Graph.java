@@ -96,33 +96,33 @@ public class Graph {
 	 * @return boolean of useDistCost
 	 */
 	public boolean getUseDistCost() {
-        return useDistCost;
-    }
+        	return useDistCost;
+    	}
 
 	/**
 	 * Getter for returnAddress
 	 * @return boolean of returnAddress
 	 */
-    public boolean getReturnAddress() {
-        return returnAddress;
-    }
+   	 public boolean getReturnAddress() {
+        	return returnAddress;
+   	 }
 
 
 	/**
 	 * Setter for useDistCost
 	 * @param useDistCost boolean indicator
 	 */
-    public void setUseDistCost(boolean useDistCost) {
-        this.useDistCost = useDistCost;
-    }
+    	public void setUseDistCost(boolean useDistCost) {
+        	this.useDistCost = useDistCost;
+    	}
     
-    /**
-     * Setter for returnAddress
-     * @param returnAddress boolean indicator
-     */
-    public void setReturnAddress(boolean returnAddress) {
-        this.returnAddress = returnAddress;
-    }
+	/**
+	* Setter for returnAddress
+	* @param returnAddress boolean indicator
+	*/
+    	public void setReturnAddress(boolean returnAddress) {
+        	this.returnAddress = returnAddress;
+    	}
     
 
 }
