@@ -9,7 +9,7 @@ public class Path implements Comparable<Path> {
 	private int totalDistCost, totalTimeCost, cost;
 	private Vertex start, end;
 	private boolean useDistCost;
-	
+
 	/**
 	 * Workhorse Constructor
 	 * @param Vertex start
@@ -33,10 +33,10 @@ public class Path implements Comparable<Path> {
 		this.totalDistCost = totalDistCost;
 		this.totalTimeCost = totalTimeCost;
 		this.useDistCost = useDistCost;
-		
+
 		this.setCost();
 	}
-	
+
 	/**
 	 * Constructor
 	 * @param useDistCost
@@ -76,7 +76,7 @@ public class Path implements Comparable<Path> {
 	/**
 	 * Add an Edge to current Path
 	 * @param Edge e
-	 * Add a new edge to current path. The current path's last vertex 
+	 * Add a new edge to current path. The current path's last vertex
 	 * must equal to the staring vertex of added Egde
 	 */
 	public void addEdge(Edge e) {
@@ -91,7 +91,7 @@ public class Path implements Comparable<Path> {
 		if (end.equals(e.getStart())) {
 			end = e.getEnd();
 			path.add(end);
-			
+
 			totalDistCost += e.getDistCost();
 			totalTimeCost += e.getTimeCost();
 			this.setCost();
@@ -100,7 +100,7 @@ public class Path implements Comparable<Path> {
 			return;
 		}
 	}
-	
+
 	@Override
 	/**
 	 * Compare based on totalDistCost or totalTimeCost
@@ -115,15 +115,15 @@ public class Path implements Comparable<Path> {
 			return 1;
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		String result = String.format("Source: %s  Destination: %s  Distance Cost: %d  Time Cost: %d",
 				start.getName(), end.getName(), totalDistCost, totalDistCost);
 		return result;
 	}
-	
-	
+
+
 	public LinkedList<Vertex> getPath() {
 		return path;
 	}

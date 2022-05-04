@@ -18,7 +18,7 @@ public class Dijkstra {
     path between them
     @params: Vertex start: the Vertex object of the
                 start point
-             Vertex end: the Vertex object of the
+             Vertex goal: the Vertex object of the
                 end point
     */
     this.start = start;
@@ -63,6 +63,8 @@ public class Dijkstra {
 
       }
     }
+
+    totalCost = pathQueue.peek().getCost();
 
     return pathQueue.peek();
   }
