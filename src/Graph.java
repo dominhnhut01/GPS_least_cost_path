@@ -9,8 +9,8 @@ import java.util.TreeSet;
 public class Graph {
 	private boolean useDistCost;
 	private boolean returnAddress;
-	private HashMap <Vertex, Set<Edge>> graphData;
-	private HashMap<String, Vertex> vertices; 
+	private HashMap <Vertex, Set<Edge>> graphData = new HashMap<Vertex, Set<Edges>>();
+	private HashMap<String, Vertex> vertices = new HashMap<String, Vertex>(); 
 	
 	public Graph() {
 		useDistCost = false;
