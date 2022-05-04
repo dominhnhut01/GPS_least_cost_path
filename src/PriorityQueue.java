@@ -1,6 +1,6 @@
 /**
  * @author Tom Ho
- * 
+ *
  * This class is implementation of Priority Queue using Heap
  */
 import java.util.Arrays;
@@ -11,7 +11,7 @@ public class PriorityQueue<T extends Comparable<? super T>> implements PriorityQ
 	private int size;
 	private static final int DEFAULT_CAPACITY = 10;
 	private final double CAPACITY_THRESHOLD = 2;
-	
+
 	public PriorityQueue() {
 		this(DEFAULT_CAPACITY);
 	}
@@ -23,13 +23,13 @@ public class PriorityQueue<T extends Comparable<? super T>> implements PriorityQ
 
 	public PriorityQueue(T[] entries) {
 		this();
-		
+
 		for (int i = 0; i < entries.length; i ++) {
 			add(entries[i]);
 		}
 	}
 
-	  
+
 	@Override
 	public boolean isEmpty() {
 		return elements[1] == null;
@@ -59,7 +59,7 @@ public class PriorityQueue<T extends Comparable<? super T>> implements PriorityQ
 		elements[++size] = newEntry;
 		reheapUp(size);
 	}
-	
+
 	private void reheapUp(int index) {
 
 		int parentIndex = index / 2;
@@ -75,18 +75,18 @@ public class PriorityQueue<T extends Comparable<? super T>> implements PriorityQ
 		elements[index] = elements[parentIndex];
 		elements[parentIndex] = tmp;
 	}
-	
+
 	private void verifyCapacity() {
-		
+
 		if (size * CAPACITY_THRESHOLD >= elements.length) {
-			
+
 			int newSize = elements.length * 2 + 1;
 		    T[] newElements = (T[]) new Comparable[newSize];
-	
+
 		    for (int i = 1; i < size + 1; i++) {
 		    	newElements[i] = elements[i];
 		    }
-	
+
 		    this.elements = newElements;
 	    }
 	}
@@ -101,33 +101,33 @@ public class PriorityQueue<T extends Comparable<? super T>> implements PriorityQ
 	@Override
 	public T remove() {
 		if (isEmpty())
-		    throw new NoSuchElementException();
+			throw new NoSuchElementException();
 
-	    T ret = elements[1];
-	    elements[1] = elements[size];
-	    elements[size] = null;
-	    reheapDown(1);
-	    size--;
-	    return ret;
+    T ret = elements[1];
+    elements[1] = elements[size];
+    elements[size] = null;
+    reheapDown(1);
+    size--;
+    return ret;
 	}
-	
+
 	private void reheapDown(int index) {
 		int leftChild = index * 2;
-	    int rightChild = index * 2 + 1;
-	    int largerChild = elements[leftChild].compareTo(elements[rightChild]) > 0  ? leftChild : rightChild;
-	    
-	    if (elements[leftChild] == null) 
-	    	return;
-	    
-	    while (elements[largerChild] != null && elements[index].compareTo(elements[largerChild]) < 0) {
-		    swap(index, largerChild);
-	        index = largerChild;
-	        leftChild = index * 2;
-		    rightChild = index * 2 + 1;
-		    largerChild = elements[leftChild].compareTo(elements[rightChild]) > 0  ? leftChild : rightChild;
-	    }
+    int rightChild = index * 2 + 1;
+    int largerChild = elements[leftChild].compareTo(elements[rightChild]) > 0  ? leftChild : rightChild;
+
+    if (elements[leftChild] == null)
+    	return;
+
+    while (elements[largerChild] != null && elements[index].compareTo(elements[largerChild]) < 0) {
+	    swap(index, largerChild);
+        index = largerChild;
+        leftChild = index * 2;
+	    rightChild = index * 2 + 1;
+	    largerChild = elements[leftChild].compareTo(elements[rightChild]) > 0  ? leftChild : rightChild;
+    }
 	}
-	
+
 	@Override
 	public String toString() {
 		if (isEmpty())
