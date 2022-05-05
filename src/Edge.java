@@ -16,6 +16,14 @@ public class Edge {
 	 * @param int timeCost
 	 * @param int distCost
 	 */
+  public Edge(Vertex start, Vertex end) {
+ 		this.start = start;
+ 		this.end = end;
+    if (start.equals(end)) {
+      this.timeCost = 0;
+      this.distCost = 0;
+    }
+  }
 	public Edge(Vertex start, Vertex end, int timeCost, int distCost) {
 		this.start = start;
 		this.end = end;

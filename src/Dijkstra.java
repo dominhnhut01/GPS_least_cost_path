@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class Dijkstra {
   //Properties
-  private PriorityQueue<Path> pathQueue;
+  private SortedLinkedListPriorityQueue<Path> pathQueue;
   private int totalCost;
-  private Map<String, Edge> edgeList;
-  private Map<Vertex, ArrayList<Edge>> vertexList;
+  private HashMap<String, Vertex> vertexList;
+  private HashMap<Vertex, ArrayList<Edge>> edgeList;
   Vertex start, goal, end;
 
   //Method
@@ -24,17 +24,17 @@ public class Dijkstra {
     this.start = start;
     this.goal = goal;
     this.totalCost = 0;
-    this.edgeList = new HashMap<String, Edge>();
-    this.pathQueue = new PathQueue<Path>();
+    this.edgeList = new HashMap<Vertex, ArrayList<Edge>>();
+    this.vertexList = new HashMap<String, Vertex>();
+    this.pathQueue = new SortedLinkedListPriorityQueue<Path>();
   }
 
-  public void addEdge(Edge edge) {
-    String edgeStr = edge.getStart().toString() + edge.getEnd().toString();
-    edgeList.put(edgeStr, edge);
+  public void addVertexList(HashMap<String, Vertex> vertexList) {
+    this.vertexList = vertexList;
   }
 
-  public void addVertex(Vertex vertex) {
-    vertexList.put(vertex.toString(), vertex);
+  public void addEdgeList(HashMap <Vertex, ArrayList<Edge>> edgeList) {
+    this.edgeList = edgeList;
   }
 
   public void setStart(Vertex start) {
@@ -47,7 +47,13 @@ public class Dijkstra {
 
   public Path shortestPath(boolean useDistCost) {
     Vertex curStartPoint = start;
-    pathQueue.add(new Path(start, useDistCost));
+
+    //Create a first edge with the same start and end point
+    // to initialize the Dijkstra
+    Edge firstEdge = new Edge(curStartPoint, curStartPoint);
+    Path firstPath = new Path(useDistCost);
+    firstPath.addEdge(firstEdge);
+    pathQueue.add(firstPath);
     Path curPath;
     Path clonePath;
 

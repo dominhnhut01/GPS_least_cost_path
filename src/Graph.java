@@ -11,6 +11,7 @@ public class Graph {
 	private boolean returnAddress;
 	private HashMap <Vertex, ArrayList<Edge>> graphData;
 	private HashMap <String, Vertex> vertices;
+	private Dijkstra Dijkstra_search;
 
 	public Graph() {
 		useDistCost = false;
@@ -91,23 +92,29 @@ public class Graph {
 
 			}
 
-			for (String s : vertices.keySet()) {
-				System.out.println(vertices.get(s));
-			}
-			for (Vertex v : graphData.keySet()) {
-				System.out.println(graphData.get(v));
-			}
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
 
-	public Path findShortestPath(String start, String end) {
+	public Path findShortestPath(String start, String goal) {
 		Vertex startVertex = vertices.get(start);
-		Vertex endVertex = vertices.get(end);
+		Vertex goalVertex = vertices.get(goal);
 
-		return null;
+		Dijkstra Dijkstra_search = new Dijkstra(startVertex, goalVertex);
+		Dijkstra_search.addEdgeList(graphData);
+		Dijkstra_search.addVertexList(vertices);
+		Path shortest = Dijkstra_search.shortestPath(true);
+		System.out.println(shortest);
+		return shortest;
+	}
+
+	public Map<String, Vertex> getVertices() {
+		return vertices;
+	}
+
+	public Map<Vertex, ArrayList<Edge>> getGraphData() {
+		return graphData;
 	}
 
 
@@ -123,24 +130,24 @@ public class Graph {
 	 * Getter for returnAddress
 	 * @return boolean of returnAddress
 	 */
-   	 public boolean getReturnAddress() {
-      	return returnAddress;
-   	 }
+ 	 public boolean getReturnAddress() {
+    	return returnAddress;
+ 	 }
 
 
 	/**
 	 * Setter for useDistCost
 	 * @param useDistCost boolean indicator
 	 */
-    	public void setUseDistCost(boolean useDistCost) {
-      	this.useDistCost = useDistCost;
-    	}
+  	public void setUseDistCost(boolean useDistCost) {
+    	this.useDistCost = useDistCost;
+  	}
 
 	/**
 	* Setter for returnAddress
 	* @param returnAddress boolean indicator
 	*/
-    	public void setReturnAddress(boolean returnAddress) {
-      	this.returnAddress = returnAddress;
-    	}
+  	public void setReturnAddress(boolean returnAddress) {
+    	this.returnAddress = returnAddress;
+  	}
 	}
