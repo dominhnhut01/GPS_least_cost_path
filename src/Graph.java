@@ -20,8 +20,9 @@ public class Graph {
 		vertices = new HashMap<String, Vertex>();
 	}
 
-	public Graph(String fileName) {
+	public Graph(String fileName, boolean useDistCost) {
 		this();
+		this.useDistCost = useDistCost;
 		Scanner in = null;
 		Vertex vertexToAdd, start, end;
 		Edge edgeToAdd;
@@ -57,44 +58,40 @@ public class Graph {
 
 			// Skips lines until Edges are reached
       while (!line.equals("<Edges>")) { line = in.nextLine(); }
-      in.nextLine();
 
-			String keyCheck = "";
-			line = in.nextLine();
-			String[] firstKey = line.trim().split("\t");
-
-      start = vertices.get(firstKey[0]);
-
-      keyCheck = start.getName();
-
-      end = vertices.get(firstKey[1]);
-      timeCost = Integer.parseInt(firstKey[2]);
-      distCost = Integer.parseInt(firstKey[3]);
-      edgeToAdd = new Edge(start, end, timeCost, distCost);
-      edges.add(edgeToAdd);
-
-			while (in.hasNextLine()) {
-				line = in.nextLine();
-	      String inputEdges[] = line.trim().split("\t");
-	      if (inputEdges[0].equals("</Edges>")) {
-	      	graphData.put(vertices.get(keyCheck), edges);
-	      	break;
+      line = in.nextLine();
+      String[] s = line.split("\t");
+      Edge tempEdge;
+      ArrayList<Edge> tempList;
+      while (!line.equals("</Edges>")) {
+	      line = in.nextLine();
+	      System.out.println(line);
+	      s = line.split("\t");
+	      if (s[0].equals("</Edges>")) {
+		      break;
+		  }
+	      
+	      start = vertices.get(s[0]);
+	      end = vertices.get(s[1]);
+	      timeCost = Integer.parseInt(s[2]);
+	      distCost = Integer.parseInt(s[3]);
+	      tempEdge = new Edge(start, end, timeCost, distCost);
+	      
+	      //Add new edges to the hash map graphData when it's empty and non empty
+	      if (graphData.get(start) == null) {
+	    	  tempList= new ArrayList<Edge>();
+	    	  tempList.add(tempEdge);
+	    	  graphData.put(start, tempList);
+	      }	else {
+	    	  tempList = graphData.get(start);
+	    	  tempList.add(tempEdge); 
+	    	  graphData.put(start, tempList);
 	      }
+      }
 
-	      start = vertices.get(inputEdges[0]);
-	      end = vertices.get(inputEdges[1]);
-	      timeCost = Integer.parseInt(inputEdges[2]);
-	      distCost = Integer.parseInt(inputEdges[3]);
-
-	      edgeToAdd = new Edge(start, end, timeCost, distCost);
-	      edges.add(edgeToAdd);
-
-
-			}
-
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		}
+	  } catch (FileNotFoundException e) {
+		  e.printStackTrace();
+	  }
 	}
 
 	public Path findShortestPath(String start, String goal) {
@@ -108,6 +105,25 @@ public class Graph {
 		System.out.println(shortest);
 		return shortest;
 	}
+	
+//	public Path testShortestPath() {
+//		graphData.clear();
+//		Vertex nodeA = vertices.get("A");
+//		Vertex nodeB = vertices.get("B");
+//		Vertex nodeD = vertices.get("D");
+//		Vertex nodeC = vertices.get("C");
+//		Vertex nodeE = vertices.get("E");
+//		Vertex nodeK = vertices.get("K");
+//		
+//		Edge edgeAB = new Edge(nodeA, nodeB);
+//		Edge edgeDA = new Edge(nodeD, nodeA);
+//		Edge edgeBC = new Edge(nodeB, nodeC);
+//		Edge edgeCK = new Edge(nodeC, nodeK);
+//		Edge edgeDK = new Edge(nodeD, nodeK);
+//		Edge edgeDE = new Edge(nodeD, nodeE);
+//		
+//		graphData
+//	}
 
 	public Map<String, Vertex> getVertices() {
 		return vertices;

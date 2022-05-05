@@ -1,10 +1,11 @@
 import java.util.Map;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.PriorityQueue;
 
 public class Dijkstra {
   //Properties
-  private SortedLinkedListPriorityQueue<Path> pathQueue;
+  private PriorityQueue<Path> pathQueue;
   private int totalCost;
   private HashMap<String, Vertex> vertexList;
   private HashMap<Vertex, ArrayList<Edge>> edgeList;
@@ -26,7 +27,7 @@ public class Dijkstra {
     this.totalCost = 0;
     this.edgeList = new HashMap<Vertex, ArrayList<Edge>>();
     this.vertexList = new HashMap<String, Vertex>();
-    this.pathQueue = new SortedLinkedListPriorityQueue<Path>();
+    this.pathQueue = new PriorityQueue<Path>();
   }
 
   public void addVertexList(HashMap<String, Vertex> vertexList) {
@@ -56,17 +57,20 @@ public class Dijkstra {
     pathQueue.add(firstPath);
     Path curPath;
     Path clonePath;
-
+    
     ArrayList<Edge> tempEdges;
-    while (pathQueue.peek() != null && pathQueue.peek().getEnd().equals(goal)) {
+    while (pathQueue.peek() != null && !pathQueue.peek().getEnd().equals(goal)) {
+      
       curPath = pathQueue.poll();  // Path class
-      tempEdges = vertexList.get(curPath.getEnd());
+
+      tempEdges = edgeList.get(curPath.getEnd());
+      
 
       for (Edge e : tempEdges) {
+    	
         clonePath = new Path(curPath);
-        clonePath.addEdge(e);
-        pathQueue.add(clonePath);
-
+        if (clonePath.addEdge(e))
+        	pathQueue.add(clonePath);
       }
     }
 

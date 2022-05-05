@@ -6,6 +6,7 @@ import java.util.*;
  */
 public class Path implements Comparable<Path> {
 	private LinkedList<Edge> path;
+	private ArrayList<Vertex> verticesVisited;
 	private int totalDistCost, totalTimeCost, cost;
 	private Vertex start, end;
 	private boolean useDistCost;
@@ -44,6 +45,7 @@ public class Path implements Comparable<Path> {
 	public Path(boolean useDistCost) {
 		this.start = this.end = null;
 		this.path = new LinkedList<Edge>();
+		this.verticesVisited = new ArrayList<Vertex>();
 		this.totalDistCost = this.totalTimeCost = 0;
 		this.useDistCost = useDistCost;
 		this.setCost();
@@ -67,6 +69,7 @@ public class Path implements Comparable<Path> {
 		this.start = p.getStart();
 		this.end = p.getEnd();
 		setPath(p.getPath());
+		this.verticesVisited = p.getVerticesVisited();
 		this.totalDistCost = p.getTotalDistCost();
 		this.totalTimeCost = p.getTotalTimeCost();
 		this.useDistCost = p.isUseDistCost();
@@ -79,24 +82,28 @@ public class Path implements Comparable<Path> {
 	 * Add a new edge to current path. The current path's last vertex
 	 * must equal to the staring vertex of added Egde
 	 */
-	public void addEdge(Edge e) {
-		if (e.getStart().equals(e.getEnd()))
-			return;
+	public boolean addEdge(Edge e) {
+		if (e.getStart().equals(e.getEnd())) {
+			this.start = e.getStart();
+			this.end = e.getEnd();
+			verticesVisited.add(e.getEnd());
+			return true;
+		}
 		if (start == null) {
 			// Update initial start & end nodes
 			path.add(e);
 		}
 
-		if (this.end.equals(e.getStart())) {
+		if (this.end.equals(e.getStart()) && !verticesVisited.contains(e.getEnd())) {
 			this.end = e.getEnd();
 			path.add(e);
 
 			totalDistCost += e.getDistCost();
 			totalTimeCost += e.getTimeCost();
 			this.setCost();
+			return true;
 		} else {
-			System.out.println("End vertex != new path's starting Vertex");
-			return;
+			return false;
 		}
 	}
 
@@ -117,8 +124,15 @@ public class Path implements Comparable<Path> {
 
 	@Override
 	public String toString() {
-		String result = String.format("Source: %s  Destination: %s  Distance Cost: %d  Time Cost: %d",
+		String result = String.format("Source: %s  Destination: %s  Distance Cost: %d  Time Cost: %d\n",
 				start.getName(), end.getName(), totalDistCost, totalDistCost);
+		System.out.println(path);
+		for (Edge e : path) {
+			result += e.getStart().getName();
+			result += "-->";
+		}
+		
+		result += this.end.getName();
 		return result;
 	}
 
@@ -161,6 +175,10 @@ public class Path implements Comparable<Path> {
 
 	public void setEnd(Vertex end) {
 		this.end = end;
+	}
+	
+	public ArrayList<Vertex> getVerticesVisited() {
+		return verticesVisited;
 	}
 
 	public boolean isUseDistCost() {
