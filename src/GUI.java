@@ -5,13 +5,15 @@ import javax.swing.border.*;
 import java.util.*;
 
 public class GUI extends JPanel {
-    private static final int FRAME_WIDTH = 800;
-    private static final int FRAME_HEIGHT = 700;
+    private static final int FRAME_WIDTH = 750;
+    private static final int FRAME_HEIGHT = 750;
 
     public static boolean useDistCost;
+    public static boolean returnAddress;
     private JTextArea resultText, verticesText, edgesText;
     private JScrollPane edgesScroll, verticesScroll, resultScroll;
     private JCheckBox useDistCostBox;
+    private JCheckBox returnAddressBox;
     private JButton findPath;
     private Graph graph;
     private Path shortestPath;
@@ -40,7 +42,7 @@ public class GUI extends JPanel {
         inputPanel.setLayout(new GridLayout(3, 1));
 
         edgesText = new JTextArea(15, 15);
-        verticesText = new JTextArea(15, 15);
+        verticesText = new JTextArea(25, 15);
 
         LoadData("MapInformationXY.txt");
         System.out.println("Read Done");
@@ -81,9 +83,18 @@ public class GUI extends JPanel {
         JPanel actionPanel = new JPanel();
         actionPanel.setLayout(new GridLayout(2, 1));
 
+        JPanel checkBoxPanel = new JPanel();
+        checkBoxPanel.setLayout(new GridLayout(2,1));
+
         useDistCostBox = new JCheckBox("Use Distance Cost");
         useDistCostBox.addActionListener(new AddDistCostActionListener());
-        actionPanel.add(useDistCostBox);
+        checkBoxPanel.add(useDistCostBox);
+
+        returnAddressBox = new JCheckBox("Return Address");
+        returnAddressBox.addActionListener(new AddReturnAddressActionListener());
+        checkBoxPanel.add(returnAddressBox);
+
+        actionPanel.add(checkBoxPanel);
 
         findPath = new JButton("Find Shortest Paths");
         findPath.addActionListener(new AddButtonActionListener());
@@ -124,10 +135,19 @@ public class GUI extends JPanel {
                 resultText.append("Using " + (useDistCost ? "Distance" : "Time") + " Cost\n");
                 Vertex v = shortestPath.getStart();
                 resultText.append(String.format("Path: %s-->%s\tTime Cost: 0\tDistance Cost: 0", v, v));
+                if (returnAddress == true) {
+                	resultText.append("\n--------------------------------\n");
+                	resultText.append(String.format("Path: %s-->%s\n", v.getAddress(), v.getAddress()));
+                }
             }
               else {
                 resultText.append("Using " + (useDistCost ? "Distance" : "Time") + " Cost\n");
-                resultText.append(shortestPath.toString()+ "\n");
+                resultText.append(shortestPath.toString());
+                if (returnAddress == true) {
+                	resultText.append("\n--------------------------------\n");
+                	resultText.append("Address: \n");
+                	resultText.append(shortestPath.toStringAddress());
+                }
                 repaint();
             }
         }
@@ -139,6 +159,16 @@ public class GUI extends JPanel {
                 useDistCost = true;
             } else {
                 useDistCost = false;
+            }
+        }
+    }
+
+    class AddReturnAddressActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            if (returnAddressBox.isSelected()) {
+                returnAddress = true;
+            } else {
+                returnAddress = false;
             }
         }
     }

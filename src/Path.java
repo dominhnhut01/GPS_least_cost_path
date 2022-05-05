@@ -129,7 +129,20 @@ public class Path implements Comparable<Path> {
 		}
 
 		result += this.end.getName();
-		result += String.format("   Time Cost: %d   Distance Cost: %d ", getTotalTimeCost(), getTotalDistCost());
+		result += String.format("   Time Cost: %d   Distance Cost: %d\n", getTotalTimeCost(), getTotalDistCost());
+		result += String.format("Total cost: %d ", getCost());
+		result += (this.useDistCost ? "miles\n" : "minutes"); 
+		return result;
+	}
+	
+	public String toStringAddress() {
+		String result = String.format("Path: ");
+		for (Edge e : path) {
+			result += e.getStart().getAddress();
+			result += "-->";
+		}
+
+		result += this.end.getAddress();
 		return result;
 	}
 
@@ -187,7 +200,7 @@ public class Path implements Comparable<Path> {
 	}
 
 	public int getCost() {
-		return cost;
+		return this.useDistCost ? this.totalDistCost : this.totalTimeCost;
 	}
 
 	public void setCost() {
