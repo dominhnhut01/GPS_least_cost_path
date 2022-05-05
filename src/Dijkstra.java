@@ -76,8 +76,6 @@ public class Dijkstra {
       }
     }
 
-    totalCost = pathQueue.peek().getCost();
-
     return pathQueue.peek();
   }
 

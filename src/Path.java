@@ -122,7 +122,7 @@ public class Path implements Comparable<Path> {
 	@Override
 	public String toString() {
 		String result = String.format("Source: %s  Destination: %s  Distance Cost: %d  Time Cost: %d\n",
-				start.getName(), end.getName(), totalDistCost, totalDistCost);
+				start.getName(), end.getName(), totalDistCost, totalTimeCost);
 		System.out.println(path);
 		for (Edge e : path) {
 			result += e.getStart().getName();
