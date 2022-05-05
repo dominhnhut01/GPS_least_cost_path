@@ -6,7 +6,7 @@ import java.util.*;
 
 public class GUI extends JPanel {
     private static final int FRAME_WIDTH = 800;
-    private static final int FRAME_HEIGHT = 650;
+    private static final int FRAME_HEIGHT = 700;
 
     public static boolean useDistCost;
     private JTextArea resultText, verticesText, edgesText;
@@ -20,7 +20,7 @@ public class GUI extends JPanel {
     private String start, end;
     private JPanel resultPanel;
 
-    JFrame window = new JFrame("Path Finder");
+    JFrame window = new JFrame("GPS Least Cost Path");
 
     public GUI() {
         window.setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -39,19 +39,19 @@ public class GUI extends JPanel {
         JPanel inputPanel = new JPanel();
         inputPanel.setLayout(new GridLayout(3, 1));
 
-        edgesText = new JTextArea(12, 15);
-        verticesText = new JTextArea(12, 15);
+        edgesText = new JTextArea(15, 15);
+        verticesText = new JTextArea(15, 15);
 
         LoadData("MapInformationXY.txt");
         System.out.println("Read Done");
 
         edgesScroll = new JScrollPane(edgesText);
         edgesScroll.setPreferredSize(new Dimension(20, 30));
-        edgesScroll.setBorder(new TitledBorder("Edges Info"));
+        edgesScroll.setBorder(new TitledBorder("Edges Info (Source, Destination, Time, Distance)"));
 
         verticesScroll = new JScrollPane(verticesText);
         edgesScroll.setPreferredSize(new Dimension(20, 30));
-        verticesScroll.setBorder(new TitledBorder("Vertices Info"));
+        verticesScroll.setBorder(new TitledBorder("Vertices Info (Name, Address, X, Y)"));
 
         JPanel selectionPanel = new JPanel(new GridLayout(3, 3));
 
@@ -79,7 +79,7 @@ public class GUI extends JPanel {
         window.add(inputPanel, BorderLayout.WEST);
 
         JPanel actionPanel = new JPanel();
-        actionPanel.setLayout(new GridLayout(1, 2));
+        actionPanel.setLayout(new GridLayout(2, 1));
 
         useDistCostBox = new JCheckBox("Use Distance Cost");
         useDistCostBox.addActionListener(new AddDistCostActionListener());
@@ -115,10 +115,8 @@ public class GUI extends JPanel {
     class AddButtonActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             resultText.setText("");
+            graph.setUseDistCost(useDistCost);
             shortestPath = graph.findShortestPath(start, end);
-            System.out.println(start);
-            System.out.println(end);
-            System.out.println(shortestPath);
 
             if(shortestPath == null) {
                 resultText.append("No path found");
@@ -163,7 +161,6 @@ public class GUI extends JPanel {
         try {
             // initilize the graph
             graph = new Graph(fileName, useDistCost);
-
             for (Map.Entry<String, Vertex> entry : graph.getVertices().entrySet()) {
                 String key = entry.getKey();
                 Vertex v = entry.getValue();
@@ -171,7 +168,7 @@ public class GUI extends JPanel {
 
                 endOption.add(key);
 
-                String result = String.format("%s  %s  %s  %s", v.getName(), v.getAddress(), v.getX(), v.getY());
+                String result = String.format("%s\t%s\t%s\t%s", v.getName(), v.getAddress(), v.getX(), v.getY());
                 verticesText.append(result + "\n");
             }
 

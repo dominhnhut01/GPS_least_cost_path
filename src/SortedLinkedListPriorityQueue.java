@@ -73,7 +73,6 @@ public class SortedLinkedListPriorityQueue<T extends Comparable<? super T>> impl
 		while (curr != null && curr.data.compareTo(newEntry) <= 0) {
 			prev = curr;
 			curr = curr.next;
-			
 		}
 		
 		if (prev == null) {

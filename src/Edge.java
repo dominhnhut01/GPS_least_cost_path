@@ -1,6 +1,6 @@
 /**
- * @author Duc Vu
- * Class Edge stores the graph's edges
+ * @author Duc Vu, Tom Ho, Steve(Nhut) Do
+ * Class Edge stores the graph's edges (Start, Destination, Costs)
  */
 import java.awt.Graphics;
 import java.awt.Color;

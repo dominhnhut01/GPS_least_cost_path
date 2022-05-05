@@ -1,11 +1,13 @@
-import java.util.Map;
+/**
+ * @author Duc Vu, Tom Ho, Steve(Nhut) Do
+ * Class Dijkstra finds the shortest path
+ */
 import java.util.HashMap;
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 
 public class Dijkstra {
   //Properties
-  private PriorityQueue<Path> pathQueue;
+  private SortedLinkedListPriorityQueue<Path> pathQueue;
   private int totalCost;
   private HashMap<String, Vertex> vertexList;
   private HashMap<Vertex, ArrayList<Edge>> edgeList;
@@ -27,7 +29,7 @@ public class Dijkstra {
     this.totalCost = 0;
     this.edgeList = new HashMap<Vertex, ArrayList<Edge>>();
     this.vertexList = new HashMap<String, Vertex>();
-    this.pathQueue = new PriorityQueue<Path>();
+    this.pathQueue = new SortedLinkedListPriorityQueue<Path>();
   }
 
   public void addVertexList(HashMap<String, Vertex> vertexList) {
@@ -65,7 +67,8 @@ public class Dijkstra {
     ArrayList<Edge> tempEdges;
     while (pathQueue.peek() != null && !pathQueue.peek().getEnd().equals(goal)) {
 
-      curPath = pathQueue.poll();  // Path class
+      curPath = pathQueue.peek();  // Path class
+      pathQueue.remove();
 
       tempEdges = edgeList.get(curPath.getEnd());
 

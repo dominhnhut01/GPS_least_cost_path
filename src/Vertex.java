@@ -1,11 +1,10 @@
 /**
- * @author Duc Vu
+ * @author Duc Vu, Tom Ho, Steve(Nhut) Do
  * Class Vertex stores the node's names, address and coordinates
  */
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 
 public class Vertex {
 	private String name, address;
