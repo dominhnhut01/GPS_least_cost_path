@@ -2,10 +2,16 @@
  * @author Duc Vu
  * Class Vertex stores the node's names, address and coordinates
  */
+
+import java.awt.Graphics;
+import java.awt.Color;
+
 public class Vertex {
 	private String name, address;
-	private int x, y;
-	
+	public int x, y;
+	public int width = 10, height = 10;
+	private final int SIZE = 25;
+
 	/**
 	 * Constructor
 	 * @param name
@@ -19,7 +25,7 @@ public class Vertex {
 		this.x = x;
 		this.y = y;
 	}
-	
+
 	/**
 	 * Default Constructor
 	 */
@@ -29,7 +35,7 @@ public class Vertex {
 		this.x = 0;
 		this.y = 0;
 	}
-	
+
 	/**
 	 * toString() method
 	 */
@@ -53,7 +59,7 @@ public class Vertex {
         Vertex c = (Vertex) o;
         return this.name.equals(c.getName());
     }
-	
+
 	//===========================================================================================
 	// Setters and Getters
 	// ==========================================================================================
@@ -81,4 +87,5 @@ public class Vertex {
 	public void setY(int y) {
 		this.y = y;
 	}
+
 }

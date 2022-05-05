@@ -121,9 +121,6 @@ public class GUI extends JFrame {
 	class GraphPic extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        g.drawImage(image, 50, 50, this);
-				image.setVisible(true); // see javadoc for more info on the parameters
     }
 	}
 

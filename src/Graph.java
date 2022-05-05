@@ -87,6 +87,15 @@ public class Graph {
 
 	      edgeToAdd = new Edge(start, end, timeCost, distCost);
 	      edges.add(edgeToAdd);
+
+
+			}
+
+			for (String s : vertices.keySet()) {
+				System.out.println(vertices.get(s));
+			}
+			for (Vertex v : graphData.keySet()) {
+				System.out.println(graphData.get(v));
 			}
 
 		} catch (FileNotFoundException e) {
@@ -94,10 +103,11 @@ public class Graph {
 		}
 	}
 
-	public findShortestPath(String start, String end) {
+	public Path findShortestPath(String start, String end) {
 		Vertex startVertex = vertices.get(start);
 		Vertex endVertex = vertices.get(end);
 
+		return null;
 	}
 
 

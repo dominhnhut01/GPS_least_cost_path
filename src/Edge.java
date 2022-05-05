@@ -2,10 +2,13 @@
  * @author Duc Vu
  * Class Edge stores the graph's edges
  */
+ import java.awt.Graphics;
+ import java.awt.Color;
+
 public class Edge {
 	private Vertex start, end;
 	private int timeCost, distCost;
-	
+
 	/**
 	 * Workhorse Constructor
 	 * @param Vertex start
@@ -19,7 +22,7 @@ public class Edge {
 		this.timeCost = timeCost;
 		this.distCost = distCost;
 	}
-	
+
 	@Override
 	public String toString() {
 		String result = String.format("%s\t%s\t%d\t%d", start.getName(), end.getName(), timeCost, distCost);
@@ -43,7 +46,7 @@ public class Edge {
 			timeCost == c.getTimeCost() &&
 			distCost == c.getDistCost();
     }
-	
+
 	//===========================================================================================
 	// Setters and Getters
 	// ==========================================================================================
@@ -71,4 +74,5 @@ public class Edge {
 	public void setDistCost(int distCost) {
 		this.distCost = distCost;
 	}
+
 }

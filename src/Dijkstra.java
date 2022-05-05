@@ -7,7 +7,7 @@ public class Dijkstra {
   private PriorityQueue<Path> pathQueue;
   private int totalCost;
   private Map<String, Edge> edgeList;
-  private Map<String, Vertex> vertexList;
+  private Map<Vertex, ArrayList<Edge>> vertexList;
   Vertex start, goal, end;
 
   //Method
@@ -54,7 +54,7 @@ public class Dijkstra {
     ArrayList<Edge> tempEdges;
     while (pathQueue.peek() != null && pathQueue.peek().getEnd().equals(goal)) {
       curPath = pathQueue.poll();  // Path class
-      tempEdges = findEdge(curPath.getEnd());
+      tempEdges = vertexList.get(curPath.getEnd());
 
       for (Edge e : tempEdges) {
         clonePath = new Path(curPath);
@@ -70,22 +70,22 @@ public class Dijkstra {
   }
 
   /**
-   * Return edge with the vertex argument as the start start
+   * Return edge with the vertex argument as the start
    * @param startPoint
    * @return
    */
-  public ArrayList<Edge> findEdge(Vertex startPoint) {
-    String curEdgeStr;
-    Edge curEdge;
-    ArrayList<Edge> validEdges = new ArrayList<Edge>();
-    for (String v : vertexList.keySet()) {
-      curEdgeStr = startPoint.toString() + v;
-      curEdge = edgeList.get(curEdgeStr);
-      if (curEdge != null) {
-        validEdges.add(curEdge);
-      }
-    }
-
-    return validEdges;
-  }
+  // public ArrayList<Edge> findEdge(Vertex startPoint) {
+  //   String curEdgeStr;
+  //   Edge curEdge;
+  //   ArrayList<Edge> validEdges = new ArrayList<Edge>();
+  //   for (String v : vertexList.keySet()) {
+  //     curEdgeStr = startPoint.toString() + v;
+  //     curEdge = edgeList.get(curEdgeStr);
+  //     if (curEdge != null) {
+  //       validEdges.add(curEdge);
+  //     }
+  //   }
+  //
+  //   return validEdges;
+  // }
 }
