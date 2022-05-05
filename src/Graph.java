@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.ArrayList;
+import java.awt.Graphics;
 
 public class Graph {
 	private boolean useDistCost;
@@ -166,4 +167,25 @@ public class Graph {
   	public void setReturnAddress(boolean returnAddress) {
     	this.returnAddress = returnAddress;
   	}
+	
+	public void draw(Graphics g) {
+		for (Map.Entry<Vertex, ArrayList<Edge>> set :graphData.entrySet()) {
+			ArrayList<Edge> edges = set.getValue();
+			for(Edge e : edges)
+				e.draw(g);
+        }
 	}
+	public boolean drawPath(Graphics g, Vertex start, Vertex end) {
+		for (Map.Entry<Vertex, ArrayList<Edge>> set :graphData.entrySet()) {
+			ArrayList<Edge> edges = set.getValue();
+			for(Edge e : edges)
+				e.draw(g);
+        }
+
+		Path resultEdges = this.findShortestPath(start.getName(), end.getName());
+		for(Edge e : resultEdges.getPath())
+			e.drawPath(g);
+		return false; // Revise later
+	}
+}
+

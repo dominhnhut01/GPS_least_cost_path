@@ -121,15 +121,14 @@ public class Path implements Comparable<Path> {
 
 	@Override
 	public String toString() {
-		String result = String.format("Source: %s  Destination: %s  Distance Cost: %d  Time Cost: %d\n",
-				start.getName(), end.getName(), totalDistCost, totalTimeCost);
-		System.out.println(path);
+		String result = String.format("Path: ");
 		for (Edge e : path) {
 			result += e.getStart().getName();
 			result += "-->";
 		}
 		
 		result += this.end.getName();
+		result += String.format("   Time Cost: %d   Distance Cost: %d ", getTotalTimeCost(), getTotalDistCost());
 		return result;
 	}
 
@@ -196,5 +195,16 @@ public class Path implements Comparable<Path> {
 		} else {
 			this.cost = this.totalTimeCost;
 		}
+	}
+
+	public ArrayList<Vertex> getVertexList() {
+		ArrayList<Vertex> v = new ArrayList<Vertex>();
+		Edge tmp = null;
+		for (Edge e : path) {
+			v.add(e.getStart());
+			tmp = e;
+		}
+		v.add(tmp.getEnd());
+		return v;
 	}
 }

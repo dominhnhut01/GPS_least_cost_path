@@ -3,14 +3,16 @@
  * Class Vertex stores the node's names, address and coordinates
  */
 
-import java.awt.Graphics;
 import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Rectangle;
 
 public class Vertex {
 	private String name, address;
 	public int x, y;
-	public int width = 10, height = 10;
-	private final int SIZE = 25;
+	public int state=0;
+	public int width = 30, height = 30;
+	private final int SIZE = 28;
 
 	/**
 	 * Constructor
@@ -40,6 +42,15 @@ public class Vertex {
 		this(v.getName(), v.getAddress(), v.getX(), v.getY());
 	}
 
+	public void setSize(int size) {
+		width = size;
+		height = size;
+	}
+
+	public void setState(int s) {
+		this.state = s;
+	}
+
 	/**
 	 * toString() method
 	 */
@@ -63,6 +74,15 @@ public class Vertex {
         Vertex c = (Vertex) o;
         return this.name.equals(c.getName());
     }
+
+	public void draw(Graphics g) {
+		if(state == 0)		g.setColor(Color.WHITE);
+		else if(state == 1)	g.setColor(Color.yellow);
+		g.fillOval(x, y, width, height);
+		g.setColor(Color.BLACK);
+		g.drawOval(x, y, width, height);
+		g.drawString(name, x+SIZE/2-3, y+SIZE/2+3);
+	}
 
 	//===========================================================================================
 	// Setters and Getters

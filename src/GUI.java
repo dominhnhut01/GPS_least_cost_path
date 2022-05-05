@@ -1,134 +1,220 @@
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JCheckBox;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-
-import javax.imageio.ImageIO;
-
 import java.awt.event.*;
-import java.awt.Dimension;
-import java.awt.BorderLayout;
-import java.awt.GridLayout;
-import java.awt.FlowLayout;
-import java.awt.image.BufferedImage;
-import java.awt.Graphics;
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.border.*;
+import java.util.*;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.util.Scanner;
+public class GUI extends JPanel {
+    private static final int FRAME_WIDTH = 800;
+    private static final int FRAME_HEIGHT = 650;
 
-public class GUI extends JFrame {
-	private static final int FRAME_WIDTH = 650;
-	private static final int FRAME_HEIGHT = 750;
+    public static boolean useDistCost;
+    private JTextArea resultText, verticesText, edgesText;
+    private JScrollPane edgesScroll, verticesScroll, resultScroll;
+    private JCheckBox useDistCostBox;
+    private JButton findPath;
+    private Graph graph;
+    private Path shortestPath;
+    private ArrayList<String> startOption, endOption;
+    private JComboBox<String> startList, endList;
+    private String start, end;
+    private JPanel resultPanel;
 
-	private boolean useDist = false;
+    JFrame window = new JFrame("Path Finder");
 
-	//Initialize the frame and panel
-	private JFrame frame;
-	private JPanel panelInfo;
-	private JPanel panelContent;
-	private JPanel panelButton;
-	private JPanel picPanel;
+    public GUI() {
+        window.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+        window.setAlwaysOnTop(true);
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        window.setResizable(false);
+        window.setLayout(new BorderLayout());   
 
-	private BufferedImage image;
+        startOption = new ArrayList<String>();
+        startOption.add("None");
+        endOption = new ArrayList<String>();
+        endOption.add("None");
 
-	//Initialize the component
-	private JButton submitButton;
-	private JLabel startLabel;
-	private JLabel endLabel;
-	private JLabel useDistLabel;
-	private JCheckBox useDistCheckbox;
-	private JTextField start;
-	private JTextField end;
-	private GraphPic graphPic;
-	private JButton buttonspec;
+        // Container pane = window.getContentPane();
 
-	/** Default constructor, initialize the GUI.
-	 * no param
-	 * no return
-	 */
-	public GUI () throws IOException {
-		setSize(FRAME_WIDTH, FRAME_HEIGHT);
-		setTitle("Finding shortest path:");
-		setLayout(new BorderLayout());
-		panelInfo = new JPanel();
-		panelInfo.setLayout(new GridLayout(3,2));
-		TitledBorder border1 = new TitledBorder("Enter New Contact Information");
-		panelInfo.setBorder(border1);
+        JPanel inputPanel = new JPanel();
+        inputPanel.setLayout(new GridLayout(3, 1));
 
-		panelButton = new JPanel();
-		panelButton.setLayout(new FlowLayout());
+        edgesText = new JTextArea(12, 15);
+        verticesText = new JTextArea(12, 15);
 
-		submitButton = new JButton("Submit");
+        LoadData("MapInformationXY.txt");
+        System.out.println("Read Done");
 
-		start = new JTextField(20);
-		startLabel = new JLabel("Start point:     ");
+        edgesScroll = new JScrollPane(edgesText);
+        edgesScroll.setPreferredSize(new Dimension(20, 30));
+        edgesScroll.setBorder(new TitledBorder("Edges Info"));
 
-		end = new JTextField(20);
-		endLabel = new JLabel("End point:      ");
+        verticesScroll = new JScrollPane(verticesText);
+        edgesScroll.setPreferredSize(new Dimension(20, 30));
+        verticesScroll.setBorder(new TitledBorder("Vertices Info"));
+        
+        JPanel selectionPanel = new JPanel(new GridLayout(3, 3));
 
-		useDistLabel = new JLabel("Use Distance:      ");
-		useDistCheckbox = new JCheckBox("");
-		useDistCheckbox.addItemListener(new CheckBoxListener());
+        startList = new JComboBox<String>(startOption.toArray(new String[startOption.size()]));
+        endList = new JComboBox<String>(endOption.toArray(new String[endOption.size()]));
 
-		// BufferedImage myPicture = ImageIO.read(new File("FinalProjectGraph_Basic_400x400.png"));
-		// graphPic = new JLabel(new ImageIcon(myPicture));
+        startList.addActionListener(new AddStartListActionListener());
+        endList.addActionListener(new addEndActionListener());
 
-		image = ImageIO.read(new File("FinalProjectGraph_Basic_400x400.png"));
-		graphPic = new GraphPic();
+        JLabel startLabel = new JLabel("Select your starting point: ");
+        JLabel endLabel = new JLabel("Select your destination: ");
 
-		//Add all element to the panel
-		panelInfo.add(startLabel);
-		panelInfo.add(start);
+        startLabel.setForeground(Color.red);
+        endLabel.setForeground(Color.blue);
 
-		panelInfo.add(endLabel);
-		panelInfo.add(end);
-		panelInfo.add(useDistLabel);
-		panelInfo.add(useDistCheckbox);
+        selectionPanel.add(startLabel);
+        selectionPanel.add(startList);
+        selectionPanel.add(endLabel);
+        selectionPanel.add(endList);
 
-		panelButton.add(submitButton);
+        inputPanel.add(verticesScroll);
+        inputPanel.add(edgesScroll);
+        inputPanel.add(selectionPanel);
 
-		panelContent = new JPanel();
-		panelContent.add(graphPic);
+        window.add(inputPanel, BorderLayout.WEST);
 
-		//Add panel to the frame
-		add(panelInfo, BorderLayout.NORTH);
-		add(panelButton, BorderLayout.CENTER);
-		add(panelContent, BorderLayout.SOUTH);
-	}
+        JPanel actionPanel = new JPanel();
+        actionPanel.setLayout(new GridLayout(1, 2));
 
-	class CheckBoxListener implements ItemListener {
-		public void itemStateChanged(ItemEvent event) {
-			if (event.getStateChange() == 1)
-				useDist = true;
-			else
-				useDist = false;
-			//graph.setReturnAddress(useDist)
-		}
-	}
+        useDistCostBox = new JCheckBox("Use Distance Cost");
+        useDistCostBox.addActionListener(new AddDistCostActionListener());
+        actionPanel.add(useDistCostBox);
 
-	class GraphPic extends JComponent {
-    @Override
-    protected void paintComponent(Graphics g) {
+        findPath = new JButton("Find Shortest Paths");
+        findPath.addActionListener(new AddButtonActionListener());
+        actionPanel.add(findPath);
+
+        // actionPanel.setPreferredSize(new Dimension(20, 100));
+        window.add(actionPanel, BorderLayout.SOUTH);
+
+        resultPanel = new JPanel();
+        resultPanel.setLayout(new BorderLayout());
+
+        JLabel outLabel = new JLabel("Result: ");
+        outLabel.setForeground(Color.red);
+        resultText = new JTextArea(10, 30);
+        resultScroll = new JScrollPane(resultText);
+
+        JPanel output_text = new JPanel();
+        output_text.add(outLabel);
+        output_text.add(resultScroll);
+
+        resultPanel.add(this, BorderLayout.CENTER);
+        resultPanel.add(output_text, BorderLayout.SOUTH);
+
+        // Result Graph
+        window.getContentPane().add(resultPanel, BorderLayout.CENTER);
+        window.setVisible(true);
+}
+
+    class AddButtonActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            resultText.setText("");
+            shortestPath = graph.findShortestPath(start, end);
+            System.out.println(start);
+            System.out.println(end);
+            System.out.println(shortestPath);
+
+            if(shortestPath == null) {
+                resultText.append("No path found"); 
+            } else {
+                resultText.append("Using " + (useDistCost ? "Distance" : "Time") + " Cost\n");
+                resultText.append(shortestPath.toString()+ "\n"); 
+                repaint();
+            }
+        }
     }
+
+    class AddDistCostActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            if (useDistCostBox.isSelected()) {
+                useDistCost = true;
+            } else {
+                useDistCost = false;
+            }
+        }
+    }
+
+    class AddStartListActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            JComboBox comboBox1 = (JComboBox) event.getSource();
+            start = (String) comboBox1.getSelectedItem();
+        }
+    }
+
+    class addEndActionListener implements ActionListener {
+        public void actionPerformed(ActionEvent event) {
+            JComboBox comboBox2 = (JComboBox) event.getSource();
+            end = (String) comboBox2.getSelectedItem();
+        }
+    }
+
+    public void LoadData(String fileName) {
+        try {
+            // initilize the graph
+            graph = new Graph(fileName, useDistCost);
+
+            for (Map.Entry<String, Vertex> entry : graph.getVertices().entrySet()) {
+                String key = entry.getKey();
+                Vertex v = entry.getValue();
+                startOption.add(key);
+
+                endOption.add(key);
+
+                String result = String.format("%s  %s  %s  %s", v.getName(), v.getAddress(), v.getX(), v.getY());
+                verticesText.append(result + "\n");
+            }
+
+            for (Map.Entry<Vertex, ArrayList<Edge>> entry : graph.getGraphData().entrySet()) {
+                ArrayList<Edge> edgeList = entry.getValue();
+
+                for (Edge e : edgeList) {
+                    String dataLine = e.toString();
+                    edgesText.append(dataLine + "\n");
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		if (shortestPath != null) {
+            ArrayList<Vertex> vlist = shortestPath.getVertexList();
+            
+            for (Map.Entry<String, Vertex> entry : graph.getVertices().entrySet()) {
+                Vertex v = entry.getValue();
+                if(vlist.contains(v)) {
+                    v.setState(1);
+                } else {
+                    v.setState(0);
+                }
+                graph.getVertices().replace(v.getName(), v);
+            }
+
+
+            for (Vertex v : vlist) {
+                v.setState(1);
+                graph.getVertices().replace(v.getName(), v);
+            }
+            graph.drawPath(g, shortestPath.getStart(), shortestPath.getEnd());
+		} else
+            graph.draw(g);
 	}
 
+    public static void main(String[] args) {
+        try {
+            new GUI();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-  public static void main(String[] args) throws IOException {
-    GUI gui = new GUI();
-    gui.setResizable(false);
-    gui.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-    gui.setVisible(true);
-  }
 }
