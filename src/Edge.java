@@ -30,6 +30,10 @@ public class Edge {
 		this.timeCost = timeCost;
 		this.distCost = distCost;
 	}
+	
+	public Edge(Edge e) {
+		this(e.getStart(), e.getEnd(), e.getTimeCost(), e.getDistCost());
+	}
 
 	@Override
 	public String toString() {

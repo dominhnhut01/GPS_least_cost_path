@@ -35,6 +35,10 @@ public class Vertex {
 		this.x = 0;
 		this.y = 0;
 	}
+	
+	public Vertex(Vertex v) {
+		this(v.getName(), v.getAddress(), v.getX(), v.getY());
+	}
 
 	/**
 	 * toString() method

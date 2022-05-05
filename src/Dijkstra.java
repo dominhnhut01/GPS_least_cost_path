@@ -65,7 +65,9 @@ public class Dijkstra {
 
       tempEdges = edgeList.get(curPath.getEnd());
       
-
+      if (tempEdges == null) {
+    	  continue;
+      }
       for (Edge e : tempEdges) {
     	
         clonePath = new Path(curPath);

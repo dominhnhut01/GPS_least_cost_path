@@ -65,15 +65,18 @@ public class Path implements Comparable<Path> {
 	// 	this.setCost();
 	// }
 
+	/**
+	 * Clone Constructor
+	 * @param p
+	 */
 	public Path(Path p) {
-		this.start = p.getStart();
-		this.end = p.getEnd();
-		setPath(p.getPath());
-		this.verticesVisited = p.getVerticesVisited();
+		this.start = new Vertex(p.getStart());
+		this.end = new Vertex(p.getEnd());
+		this.path = new LinkedList<Edge>(p.getPath());
+		this.verticesVisited = new ArrayList<Vertex>(p.getVerticesVisited());
 		this.totalDistCost = p.getTotalDistCost();
 		this.totalTimeCost = p.getTotalTimeCost();
 		this.useDistCost = p.isUseDistCost();
-		this.setCost();
     }
 
 	/**
@@ -113,13 +116,7 @@ public class Path implements Comparable<Path> {
 	 * return -1 if fewer, 0 if equal and 1 if larger.
 	 */
 	public int compareTo(Path o) {
-		if (this.cost < o.getCost()) {
-			return -1;
-		} else if (this.cost == o.getCost()) {
-			return 0;
-		} else {
-			return 1;
-		}
+		return this.cost - o.getCost();
 	}
 
 	@Override
