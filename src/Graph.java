@@ -71,13 +71,13 @@ public class Graph {
 	      if (s[0].equals("</Edges>")) {
 		      break;
 		  }
-	      
+
 	      start = vertices.get(s[0]);
 	      end = vertices.get(s[1]);
 	      timeCost = Integer.parseInt(s[2]);
 	      distCost = Integer.parseInt(s[3]);
 	      tempEdge = new Edge(start, end, timeCost, distCost);
-	      
+
 	      //Add new edges to the hash map graphData when it's empty and non empty
 	      if (graphData.get(start) == null) {
 	    	  tempList= new ArrayList<Edge>();
@@ -85,7 +85,7 @@ public class Graph {
 	    	  graphData.put(start, tempList);
 	      }	else {
 	    	  tempList = graphData.get(start);
-	    	  tempList.add(tempEdge); 
+	    	  tempList.add(tempEdge);
 	    	  graphData.put(start, tempList);
 	      }
       }
@@ -103,10 +103,10 @@ public class Graph {
 		Dijkstra_search.addEdgeList(graphData);
 		Dijkstra_search.addVertexList(vertices);
 		Path shortest = Dijkstra_search.shortestPath(this.useDistCost);
-		
+
 		return shortest;
 	}
-	
+
 //	public Path testShortestPath() {
 //		graphData.clear();
 //		Vertex nodeA = vertices.get("A");
@@ -115,14 +115,14 @@ public class Graph {
 //		Vertex nodeC = vertices.get("C");
 //		Vertex nodeE = vertices.get("E");
 //		Vertex nodeK = vertices.get("K");
-//		
+//
 //		Edge edgeAB = new Edge(nodeA, nodeB);
 //		Edge edgeDA = new Edge(nodeD, nodeA);
 //		Edge edgeBC = new Edge(nodeB, nodeC);
 //		Edge edgeCK = new Edge(nodeC, nodeK);
 //		Edge edgeDK = new Edge(nodeD, nodeK);
 //		Edge edgeDE = new Edge(nodeD, nodeE);
-//		
+//
 //		graphData
 //	}
 
@@ -167,7 +167,7 @@ public class Graph {
   	public void setReturnAddress(boolean returnAddress) {
     	this.returnAddress = returnAddress;
   	}
-	
+
 	public void draw(Graphics g) {
 		for (Map.Entry<Vertex, ArrayList<Edge>> set :graphData.entrySet()) {
 			ArrayList<Edge> edges = set.getValue();
@@ -188,4 +188,3 @@ public class Graph {
 		return false; // Revise later
 	}
 }
-

@@ -37,7 +37,7 @@ public class Vertex {
 		this.x = 0;
 		this.y = 0;
 	}
-	
+
 	public Vertex(Vertex v) {
 		this(v.getName(), v.getAddress(), v.getX(), v.getY());
 	}
@@ -76,11 +76,19 @@ public class Vertex {
     }
 
 	public void draw(Graphics g) {
-		if(state == 0)		g.setColor(Color.WHITE);
-		else if(state == 1)	g.setColor(Color.yellow);
-		g.fillOval(x, y, width, height);
-		g.setColor(Color.BLACK);
-		g.drawOval(x, y, width, height);
+		if(state == 0) {
+				g.setColor(Color.WHITE);
+				g.fillOval(x, y, width, height);
+				g.setColor(Color.BLACK);
+				g.drawOval(x, y, width, height);
+
+		}	else if(state == 1) {
+				g.setColor(Color.CYAN);
+				g.fillOval(x, y, width, height);
+				g.setColor(Color.BLACK);
+				g.drawOval(x, y, width, height);
+				g.setColor(Color.RED);
+		}
 		g.drawString(name, x+SIZE/2-3, y+SIZE/2+3);
 	}
 

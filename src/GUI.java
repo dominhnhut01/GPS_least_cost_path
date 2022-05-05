@@ -27,7 +27,7 @@ public class GUI extends JPanel {
         window.setAlwaysOnTop(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setLayout(new BorderLayout());   
+        window.setLayout(new BorderLayout());
 
         startOption = new ArrayList<String>();
         startOption.add("None");
@@ -52,7 +52,7 @@ public class GUI extends JPanel {
         verticesScroll = new JScrollPane(verticesText);
         edgesScroll.setPreferredSize(new Dimension(20, 30));
         verticesScroll.setBorder(new TitledBorder("Vertices Info"));
-        
+
         JPanel selectionPanel = new JPanel(new GridLayout(3, 3));
 
         startList = new JComboBox<String>(startOption.toArray(new String[startOption.size()]));
@@ -121,10 +121,15 @@ public class GUI extends JPanel {
             System.out.println(shortestPath);
 
             if(shortestPath == null) {
-                resultText.append("No path found"); 
-            } else {
+                resultText.append("No path found");
+            } else if (shortestPath.getStart().equals(shortestPath.getEnd())){
                 resultText.append("Using " + (useDistCost ? "Distance" : "Time") + " Cost\n");
-                resultText.append(shortestPath.toString()+ "\n"); 
+                Vertex v = shortestPath.getStart();
+                resultText.append(String.format("Path: %s-->%s\tTime Cost: 0\tDistance Cost: 0", v, v));
+            }
+              else {
+                resultText.append("Using " + (useDistCost ? "Distance" : "Time") + " Cost\n");
+                resultText.append(shortestPath.toString()+ "\n");
                 repaint();
             }
         }
@@ -188,7 +193,7 @@ public class GUI extends JPanel {
 		super.paintComponent(g);
 		if (shortestPath != null) {
             ArrayList<Vertex> vlist = shortestPath.getVertexList();
-            
+
             for (Map.Entry<String, Vertex> entry : graph.getVertices().entrySet()) {
                 Vertex v = entry.getValue();
                 if(vlist.contains(v)) {

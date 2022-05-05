@@ -9,7 +9,7 @@ public class Dijkstra {
   private int totalCost;
   private HashMap<String, Vertex> vertexList;
   private HashMap<Vertex, ArrayList<Edge>> edgeList;
-  Vertex start, goal, end;
+  Vertex start, goal;
 
   //Method
   public Dijkstra(Vertex start, Vertex goal) {
@@ -42,8 +42,8 @@ public class Dijkstra {
     this.start = start;
   }
 
-  public void setEnd(Vertex end) {
-    this.end = end;
+  public void setGoal(Vertex goal) {
+    this.goal = goal;
   }
 
   public Path shortestPath(boolean useDistCost) {
@@ -54,22 +54,26 @@ public class Dijkstra {
     Edge firstEdge = new Edge(curStartPoint, curStartPoint);
     Path firstPath = new Path(useDistCost);
     firstPath.addEdge(firstEdge);
+    if (start.equals(goal)) {
+      // In case start vertex is the same as goal vertex
+      return firstPath;
+    }
     pathQueue.add(firstPath);
     Path curPath;
     Path clonePath;
-    
+
     ArrayList<Edge> tempEdges;
     while (pathQueue.peek() != null && !pathQueue.peek().getEnd().equals(goal)) {
-      
+
       curPath = pathQueue.poll();  // Path class
 
       tempEdges = edgeList.get(curPath.getEnd());
-      
+
       if (tempEdges == null) {
     	  continue;
       }
       for (Edge e : tempEdges) {
-    	
+
         clonePath = new Path(curPath);
         if (clonePath.addEdge(e))
         	pathQueue.add(clonePath);
