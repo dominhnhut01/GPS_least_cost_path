@@ -102,7 +102,7 @@ public class Graph {
 		Dijkstra_search.addEdgeList(graphData);
 		Dijkstra_search.addVertexList(vertices);
 		Path shortest = Dijkstra_search.shortestPath(this.useDistCost);
-		System.out.println(shortest);
+		
 		return shortest;
 	}
 	
