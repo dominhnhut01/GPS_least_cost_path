@@ -100,6 +100,7 @@ public class Path implements Comparable<Path> {
 		if (this.end.equals(e.getStart()) && !verticesVisited.contains(e.getEnd())) {
 			this.end = e.getEnd();
 			path.add(e);
+			verticesVisited.add(e.getEnd());
 
 			totalDistCost += e.getDistCost();
 			totalTimeCost += e.getTimeCost();
@@ -126,7 +127,7 @@ public class Path implements Comparable<Path> {
 			result += e.getStart().getName();
 			result += "-->";
 		}
-		
+
 		result += this.end.getName();
 		result += String.format("   Time Cost: %d   Distance Cost: %d ", getTotalTimeCost(), getTotalDistCost());
 		return result;
@@ -172,7 +173,7 @@ public class Path implements Comparable<Path> {
 	public void setEnd(Vertex end) {
 		this.end = end;
 	}
-	
+
 	public ArrayList<Vertex> getVerticesVisited() {
 		return verticesVisited;
 	}
