@@ -10,20 +10,26 @@ public class Edge {
    private int timeCost, distCost;
 
    /**
+    * Default Constructor
+    * @param start
+    * @param end
+    */
+   public Edge(Vertex start, Vertex end) {
+		this.start = start;
+		this.end = end;
+	   if (start.equals(end)) {
+		 this.timeCost = 0;
+		 this.distCost = 0;
+	   }
+   }
+   
+   /**
 	* Workhorse Constructor
 	* @param Vertex start
 	* @param Vertex end
 	* @param int timeCost
 	* @param int distCost
 	*/
- public Edge(Vertex start, Vertex end) {
-		this.start = start;
-		this.end = end;
-   if (start.equals(end)) {
-	 this.timeCost = 0;
-	 this.distCost = 0;
-   }
- }
    public Edge(Vertex start, Vertex end, int timeCost, int distCost) {
 	   this.start = start;
 	   this.end = end;
@@ -31,11 +37,18 @@ public class Edge {
 	   this.distCost = distCost;
    }
    
+   /**
+    * Copy Constructor
+    * @param e
+    */
    public Edge(Edge e) {
 	   this(e.getStart(), e.getEnd(), e.getTimeCost(), e.getDistCost());
    }
 
    @Override
+   /**
+    * toString method
+    */
    public String toString() {
 	   String result = String.format("%s\t%s\t%d\t%d", start.getName(), end.getName(), timeCost, distCost);
 	   return result;
@@ -59,6 +72,10 @@ public class Edge {
 		   distCost == c.getDistCost();
    }
 
+   /**
+    * Draw initial edge of graph
+    * @param g
+    */
    public void draw(Graphics g) {
 	   g.setColor(Color.BLACK);
 	   int coef = start.width / 2;
@@ -67,6 +84,10 @@ public class Edge {
 	   end.draw(g);
    }
 
+   /**
+    * Draw the viable path
+    * @param g
+    */
    public void drawPath(Graphics g) {
 	   g.setColor(Color.green);
 	   int coef = start.width / 2;

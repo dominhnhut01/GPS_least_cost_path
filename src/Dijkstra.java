@@ -32,22 +32,43 @@ public class Dijkstra {
     this.pathQueue = new SortedLinkedListPriorityQueue<Path>();
   }
 
+  /**
+   * This method initialize the vertext list
+   * @param vertexList
+   */
   public void addVertexList(HashMap<String, Vertex> vertexList) {
     this.vertexList = vertexList;
   }
 
+  /**
+   * This method initialize the edge list
+   * @param edgeList
+   */
   public void addEdgeList(HashMap <Vertex, ArrayList<Edge>> edgeList) {
     this.edgeList = edgeList;
   }
 
+  /**
+   * Setter for start vertex
+   * @param start
+   */
   public void setStart(Vertex start) {
     this.start = start;
   }
 
+  /**
+   * Setter for end vertex
+   * @param goal
+   */
   public void setGoal(Vertex goal) {
     this.goal = goal;
   }
 
+  /**
+   * This method return the shortest path based on distant cost
+   * @param useDistCost
+   * @return Path of shortest path
+   */
   public Path shortestPath(boolean useDistCost) {
     Vertex curStartPoint = start;
 

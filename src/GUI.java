@@ -5,9 +5,11 @@ import javax.swing.border.*;
 import java.util.*;
 
 public class GUI extends JPanel {
+	//Initialize GUI frame dimensions
     private static final int FRAME_WIDTH = 750;
     private static final int FRAME_HEIGHT = 750;
 
+    //Private properties
     public static boolean useDistCost;
     public static boolean returnAddress;
     private JTextArea resultText, verticesText, edgesText;
@@ -24,7 +26,11 @@ public class GUI extends JPanel {
 
     JFrame window = new JFrame("GPS Least Cost Path");
 
+    /**
+     * GUI constructor
+     */
     public GUI() {
+    	//Initialize GUI plane
         window.setSize(FRAME_WIDTH, FRAME_HEIGHT);
         window.setAlwaysOnTop(true);
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,20 +49,20 @@ public class GUI extends JPanel {
 
         edgesText = new JTextArea(15, 15);
         verticesText = new JTextArea(25, 15);
-
+        //Load data from file
         LoadData("MapInformationXY.txt");
         System.out.println("Read Done");
-
+        //Edge info
         edgesScroll = new JScrollPane(edgesText);
         edgesScroll.setPreferredSize(new Dimension(20, 30));
         edgesScroll.setBorder(new TitledBorder("Edges Info (Source, Destination, Time, Distance)"));
-
+        //Vertices info
         verticesScroll = new JScrollPane(verticesText);
         edgesScroll.setPreferredSize(new Dimension(20, 30));
         verticesScroll.setBorder(new TitledBorder("Vertices Info (Name, Address, X, Y)"));
 
         JPanel selectionPanel = new JPanel(new GridLayout(3, 3));
-
+        //Start/end points drop box
         startList = new JComboBox<String>(startOption.toArray(new String[startOption.size()]));
         endList = new JComboBox<String>(endOption.toArray(new String[endOption.size()]));
 
@@ -85,7 +91,7 @@ public class GUI extends JPanel {
 
         JPanel checkBoxPanel = new JPanel();
         checkBoxPanel.setLayout(new GridLayout(2,1));
-
+        // Initialize checkbox
         useDistCostBox = new JCheckBox("Use Distance Cost");
         useDistCostBox.addActionListener(new AddDistCostActionListener());
         checkBoxPanel.add(useDistCostBox);
@@ -95,7 +101,7 @@ public class GUI extends JPanel {
         checkBoxPanel.add(returnAddressBox);
 
         actionPanel.add(checkBoxPanel);
-
+        // Find path using input data
         findPath = new JButton("Find Shortest Paths");
         findPath.addActionListener(new AddButtonActionListener());
         actionPanel.add(findPath);
@@ -123,6 +129,11 @@ public class GUI extends JPanel {
         window.setVisible(true);
 }
 
+    /**
+     * 
+     * Action Listener class for Button
+     *
+     */
     class AddButtonActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             resultText.setText("");
@@ -153,6 +164,11 @@ public class GUI extends JPanel {
         }
     }
 
+    /**
+     * 
+     * Action Listener class for checkbox
+     *
+     */
     class AddDistCostActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             if (useDistCostBox.isSelected()) {
@@ -163,6 +179,11 @@ public class GUI extends JPanel {
         }
     }
 
+    /**
+     * 
+     * Action Listener class for checkbox
+     *
+     */
     class AddReturnAddressActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             if (returnAddressBox.isSelected()) {
@@ -173,6 +194,11 @@ public class GUI extends JPanel {
         }
     }
 
+    /**
+     * 
+     * Action Listener class for JCombobox
+     *
+     */
     class AddStartListActionListener implements ActionListener {
         public void actionPerformed(ActionEvent event) {
             JComboBox comboBox1 = (JComboBox) event.getSource();
@@ -186,7 +212,11 @@ public class GUI extends JPanel {
             end = (String) comboBox2.getSelectedItem();
         }
     }
-
+    
+	/**
+	 * Load data from file
+	 * @param fileName
+	 */
     public void LoadData(String fileName) {
         try {
             // initilize the graph
@@ -216,6 +246,9 @@ public class GUI extends JPanel {
     }
 
     @Override
+    /**
+     * Draw shortest path
+     */
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		if (shortestPath != null) {
@@ -241,6 +274,10 @@ public class GUI extends JPanel {
             graph.draw(g);
 	}
 
+    /**
+     * Main method
+     * @param args
+     */
     public static void main(String[] args) {
         try {
             new GUI();

@@ -1,6 +1,6 @@
 /**
  * This is the interface for priority queue
- * @author Tom Ho
+ * @author Tom Ho, Daniel Vu, Nhut (Steve) Do
  *
  * @param <T> Generic type 
  */

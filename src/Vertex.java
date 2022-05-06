@@ -37,6 +37,10 @@ public class Vertex {
 		this.y = 0;
 	}
 
+	/**
+	 * Copy constructor
+	 * @param v
+	 */
 	public Vertex(Vertex v) {
 		this(v.getName(), v.getAddress(), v.getX(), v.getY());
 	}

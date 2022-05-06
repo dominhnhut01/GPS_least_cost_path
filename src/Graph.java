@@ -13,6 +13,9 @@ public class Graph {
 	private HashMap <String, Vertex> vertices;
 	private Dijkstra Dijkstra_search;
 
+	/**
+	 * Default Constructor
+	 */
 	public Graph() {
 		useDistCost = false;
 		returnAddress = false;
@@ -20,6 +23,11 @@ public class Graph {
 		vertices = new HashMap<String, Vertex>();
 	}
 
+	/**
+	 * Workhorse constructor
+	 * @param fileName
+	 * @param useDistCost
+	 */
 	public Graph(String fileName, boolean useDistCost) {
 		this();
 		this.useDistCost = useDistCost;
@@ -94,6 +102,12 @@ public class Graph {
 	  }
 	}
 
+	/**
+	 * This method find the shortest path using Dijkstra
+	 * @param start
+	 * @param goal
+	 * @return
+	 */
 	public Path findShortestPath(String start, String goal) {
 		Vertex startVertex = vertices.get(start);
 		Vertex goalVertex = vertices.get(goal);
@@ -167,6 +181,10 @@ public class Graph {
     	this.returnAddress = returnAddress;
   	}
 
+  	/**
+  	 * Call the draw method in edge class
+  	 * @param g
+  	 */
 	public void draw(Graphics g) {
 		for (Map.Entry<Vertex, ArrayList<Edge>> set :graphData.entrySet()) {
 			ArrayList<Edge> edges = set.getValue();
@@ -174,6 +192,13 @@ public class Graph {
 				e.draw(g);
         }
 	}
+	/**
+	 * Call draw method in edge class
+	 * @param g
+	 * @param start
+	 * @param end
+	 * @return
+	 */
 	public boolean drawPath(Graphics g, Vertex start, Vertex end) {
 		for (Map.Entry<Vertex, ArrayList<Edge>> set :graphData.entrySet()) {
 			ArrayList<Edge> edges = set.getValue();
