@@ -1,5 +1,5 @@
 /**
- * @author Duc Vu, Tom Ho, Steve(Nhut) Do
+ * @author Duc Vu, Tom Ho, Nhut Do
  * Class Edge stores the graph's edges (Start, Destination, Costs)
  */
 import java.awt.Graphics;

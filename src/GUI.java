@@ -1,3 +1,8 @@
+/**
+ * @author Duc Vu, Tom Ho, Nhut Do
+ * Class GUI. Run this class to run the program
+ */
+
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.*;
@@ -51,7 +56,7 @@ public class GUI extends JPanel {
         verticesText = new JTextArea(25, 15);
         //Load data from file
         LoadData("MapInformationXY.txt");
-        System.out.println("Read Done");
+        System.out.println("Read Done\nLet's use this program on the GUI");
         //Edge info
         edgesScroll = new JScrollPane(edgesText);
         edgesScroll.setPreferredSize(new Dimension(20, 30));

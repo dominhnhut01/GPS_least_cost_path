@@ -1,3 +1,6 @@
+/**
+* @author: Nhut Do, Duc Vu, Tom Ho
+*/
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.HashMap;
@@ -62,7 +65,6 @@ public class Graph {
 			}
 
 			ArrayList<Edge> edges = new ArrayList<Edge>();
-			System.out.println("--------------------------");
 
 			// Skips lines until Edges are reached
       while (!line.equals("<Edges>")) { line = in.nextLine(); }
@@ -72,8 +74,8 @@ public class Graph {
       Edge tempEdge;
       ArrayList<Edge> tempList;
       while (!line.equals("</Edges>")) {
+    	  //Read each line and store them into Edge object, then store inside hashmap
 	      line = in.nextLine();
-	      System.out.println(line);
 	      s = line.split("\t");
 	      if (s[0].equals("</Edges>")) {
 		      break;
@@ -114,7 +116,6 @@ public class Graph {
 
 		Dijkstra Dijkstra_search = new Dijkstra(startVertex, goalVertex);
 		Dijkstra_search.addEdgeList(graphData);
-		Dijkstra_search.addVertexList(vertices);
 		Path shortest = Dijkstra_search.shortestPath(this.useDistCost);
 
 		return shortest;

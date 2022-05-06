@@ -1,7 +1,7 @@
 import java.util.*;
 
 /**
- * @author Duc Vu
+ * @author Duc Vu, Tom Ho, Steve(Nhut) Do
  * Class Path stores the path's source, destination, costs
  */
 public class Path implements Comparable<Path> {
@@ -11,32 +11,6 @@ public class Path implements Comparable<Path> {
 	private Vertex start, end;
 	private boolean useDistCost;
 
-	/**
-	 * Workhorse Constructor
-	 * @param Vertex start
-	 * @param Vertex end
-	 * @param int totalDistCost
-	 * @param int totalTimeCost
-	 * @param LinkedList<Vertex> path
-	 * @param boolean useDistCost
-	 */
-	// public Path(Vertex start,
-	// 			Vertex end,
-	// 			int totalDistCost,
-	// 			int totalTimeCost,
-	// 			LinkedList<Edge> path,
-	// 			boolean useDistCost) {
-	//
-	// 	this.start = start;
-	// 	this.end = end;
-	// 	setPath(path);
-	//
-	// 	this.totalDistCost = totalDistCost;
-	// 	this.totalTimeCost = totalTimeCost;
-	// 	this.useDistCost = useDistCost;
-	//
-	// 	this.setCost();
-	// }
 
 	/**
 	 * Constructor
@@ -51,19 +25,6 @@ public class Path implements Comparable<Path> {
 		this.setCost();
 	}
 
-	/**
-	 * Constructor
-	 * @param useDistCost
-	 */
-	// public Path(Vertex start, boolean useDistCost) {
-	// 	this.start = start;
-	// 	this.end = start;
-	// 	this.path.add(start);
-	//
-	// 	this.totalDistCost = this.totalTimeCost = 0;
-	// 	this.useDistCost = useDistCost;
-	// 	this.setCost();
-	// }
 
 	/**
 	 * Clone Constructor

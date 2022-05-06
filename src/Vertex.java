@@ -1,5 +1,5 @@
 /**
- * @author Duc Vu, Tom Ho, Steve(Nhut) Do
+ * @author Duc Vu, Tom Ho, Nhut Do
  * Class Vertex stores the node's names, address and coordinates
  */
 

@@ -1,5 +1,5 @@
 /**
- * @author Duc Vu, Tom Ho, Steve(Nhut) Do
+ * @author Nhut Do, Duc Vu, Tom Ho
  * Class Dijkstra finds the shortest path
  */
 import java.util.HashMap;
@@ -9,7 +9,7 @@ public class Dijkstra {
   //Properties
   private SortedLinkedListPriorityQueue<Path> pathQueue;
   private int totalCost;
-  private HashMap<String, Vertex> vertexList;
+  
   private HashMap<Vertex, ArrayList<Edge>> edgeList;
   Vertex start, goal;
 
@@ -28,7 +28,6 @@ public class Dijkstra {
     this.goal = goal;
     this.totalCost = 0;
     this.edgeList = new HashMap<Vertex, ArrayList<Edge>>();
-    this.vertexList = new HashMap<String, Vertex>();
     this.pathQueue = new SortedLinkedListPriorityQueue<Path>();
   }
 
@@ -36,9 +35,6 @@ public class Dijkstra {
    * This method initialize the vertext list
    * @param vertexList
    */
-  public void addVertexList(HashMap<String, Vertex> vertexList) {
-    this.vertexList = vertexList;
-  }
 
   /**
    * This method initialize the edge list
@@ -107,23 +103,4 @@ public class Dijkstra {
     return pathQueue.peek();
   }
 
-  /**
-   * Return edge with the vertex argument as the start
-   * @param startPoint
-   * @return
-   */
-  // public ArrayList<Edge> findEdge(Vertex startPoint) {
-  //   String curEdgeStr;
-  //   Edge curEdge;
-  //   ArrayList<Edge> validEdges = new ArrayList<Edge>();
-  //   for (String v : vertexList.keySet()) {
-  //     curEdgeStr = startPoint.toString() + v;
-  //     curEdge = edgeList.get(curEdgeStr);
-  //     if (curEdge != null) {
-  //       validEdges.add(curEdge);
-  //     }
-  //   }
-  //
-  //   return validEdges;
-  // }
 }

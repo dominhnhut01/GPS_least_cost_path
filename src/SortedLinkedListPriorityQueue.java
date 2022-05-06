@@ -2,7 +2,7 @@ import java.util.NoSuchElementException;
 
 /**
  * SortedLinkedListPriorityQueue
- * @author Tom Ho
+ * @author: Tom Ho, Duc Vu, Nhut Do
  * 
  * 
  */
